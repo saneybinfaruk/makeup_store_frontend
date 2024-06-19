@@ -1,31 +1,16 @@
-import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
-  Flex,
   HStack,
   IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   useDisclosure,
   VStack,
-  Text,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Icon,
 } from "@chakra-ui/react";
 import { CgProfile, CgShoppingBag } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa6";
@@ -33,8 +18,7 @@ import NavIcon from "./NavIcon";
 import { Link, useNavigate } from "react-router-dom";
 import Brand from "./Brand";
 import NavMenuItem from "./NavMenuItem";
-import { useDispatch, useSelector } from "react-redux";
-import { setSearch } from "../redux/slice/ProductQuery";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";

@@ -5,19 +5,25 @@ import {
   Image,
   Button,
   Flex,
-  Link as ChakraLink,
 } from "@chakra-ui/react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { Product } from "../redux/middleware/ProductApi";
-import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useFavorite from "../hooks/useFavorite";
 
 interface Props {
   product: Product;
   isFavorite?: boolean;
 }
-const ProductCard = ({ product, isFavorite }: Props) => {
-  const { product_id, name, price, price_sign, api_featured_image } = product;
+const ProductCard = ({ product }: Props) => {
+  const {
+    product_id,
+    name,
+    price,
+    price_sign,
+    api_featured_image,
+    product_type,
+  } = product;
   const navigate = useNavigate();
 
   const { toggleFavorite, favorite } = useFavorite(product);
@@ -32,8 +38,8 @@ const ProductCard = ({ product, isFavorite }: Props) => {
       align={"center"}
       flexDir={"column"}
       bgColor={"gray.300"}
-      gap={5}
       borderRadius={"3xl"}
+      gap={2}
       p={4}
       position={"relative"}
     >
@@ -55,15 +61,18 @@ const ProductCard = ({ product, isFavorite }: Props) => {
         bgColor={"white"}
         borderRadius={"2xl"}
       />
-      <Text align={"center"} minH={"4rem"}>
+      <Text align={"center"} minH={"4.2rem"} noOfLines={3}>
         {name}
       </Text>
-      <Text fontWeight={"bold"}>
+      <Text align={"center"} fontWeight={"500"} fontSize={"sm"} py={2}>
+        {product_type}
+      </Text>
+      <Text fontWeight={"bold"} mb={'3.5rem'}>
         {price_sign === null ? "$" : price_sign}
         {price}
       </Text>
 
-      <Box mt={2} mb={4}>
+      <Box mt={2} mb={4} position={'absolute'} bottom={0}>
         <Button
           display={"block"}
           colorScheme="red"

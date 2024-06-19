@@ -29,6 +29,7 @@ const initialState: ProductQueryState = {
 const ProductQuery = createSlice({
   name: "ProductQuery",
   initialState,
+
   reducers: {
     setProductType(state, action: PayloadAction<string[]>) {
       state.product_type = action.payload;
@@ -46,7 +47,7 @@ const ProductQuery = createSlice({
       state.tags = action.payload;
       state.pageNumber = 1;
     },
-    
+
     setMinPrice(state, action: PayloadAction<number | null>) {
       state.minPrice = action.payload;
       state.pageNumber = 1;

@@ -6,9 +6,9 @@ import {
   updateQuantity,
 } from "./slice/ProductCart";
 import { productApi } from "./middleware/ProductApi";
-import stripe, { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
-interface P extends Products {
+interface UsersProduct extends Products {
   userId: number;
 }
 
@@ -23,7 +23,7 @@ export interface CartInfoSendToBackend {
 }
 export const addItemToCartAndSaveToDB = createAsyncThunk(
   "cart/addToCartAndSaveToDB",
-  async (cartItem: P, { dispatch, rejectWithValue }) => {
+  async (cartItem: UsersProduct, { dispatch, rejectWithValue }) => {
     try {
       dispatch(
         addToCart({

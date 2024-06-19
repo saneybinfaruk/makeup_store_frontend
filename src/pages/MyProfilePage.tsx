@@ -1,5 +1,4 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import useGetUser from "../hooks/useGetUser";
 import { Outlet } from "react-router-dom";
 import SideNavbar from "../component/profile/SideNavbar";
 

@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton } from "@chakra-ui/react";
 import CarouselLayout from "./CarouselLayout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LuCircleDot, LuDot } from "react-icons/lu";
 import { Product } from "../redux/middleware/ProductApi";
 

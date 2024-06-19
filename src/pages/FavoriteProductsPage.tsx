@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Heading, SimpleGrid } from "@chakra-ui/react";
 import ProductCard from "../component/ProductCard";
-import ProductGrid from "../component/ProductGrid";
 
 const FavoriteProductsPage = () => {
   const { favoriteList } = useSelector(

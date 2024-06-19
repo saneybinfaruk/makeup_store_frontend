@@ -5,8 +5,7 @@ interface Props {
   address: Address;
 }
 const AddressItem = ({ address }: Props) => {
-  const { address_id, address_line, city, state, zip, country, address_type } =
-    address;
+  const { address_line, city, state, zip, country, address_type } = address;
   return (
     <List p={4}>
       <ListItem>{address_line}</ListItem>

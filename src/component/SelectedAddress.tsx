@@ -1,6 +1,3 @@
-import React, { useEffect } from "react";
-import { useGetSelectedAddressByUserIdQuery } from "../redux/middleware/ProductApi";
-import useGetUser from "../hooks/useGetUser";
 import { Flex, Box, Spinner, Button } from "@chakra-ui/react";
 import AddressItem from "./profile/AddressItem";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";

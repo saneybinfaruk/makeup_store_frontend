@@ -1,6 +1,5 @@
 import { Text, Badge, Box, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import { CgShoppingBag } from "react-icons/cg";
 
 interface Props {
   count: number;

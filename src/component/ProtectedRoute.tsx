@@ -1,6 +1,5 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import useGetUser from "../hooks/useGetUser";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import React, {  } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import authService from "../services/authService";
 
 interface Props {

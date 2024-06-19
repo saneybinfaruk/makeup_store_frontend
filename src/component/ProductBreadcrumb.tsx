@@ -5,7 +5,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import React from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 
 interface Props {

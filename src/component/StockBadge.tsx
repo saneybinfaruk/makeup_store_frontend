@@ -1,5 +1,4 @@
 import { Badge } from "@chakra-ui/react";
-import React from "react";
 
 const StockBadge = ({ amount }: { amount: number }) => {
   const badgeColorSet = (): { color: string; statusText: string } => {

@@ -19,7 +19,10 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
-import { useGetProductQuery } from "../redux/middleware/ProductApi";
+import {
+  SingleProduct,
+  useGetProductQuery,
+} from "../redux/middleware/ProductApi";
 import { RxDotFilled } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { CgShoppingBag } from "react-icons/cg";
@@ -44,7 +47,11 @@ import ProductBreadcrumb from "../component/ProductBreadcrumb";
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const { data, isLoading } = useGetProductQuery(parseInt(productId as string));
+  const { data, isLoading, refetch } = useGetProductQuery(
+    parseInt(productId as string)
+  );
+
+  const { product } = data || ({} as SingleProduct);
 
   let [productOption, setProductOption] = useState({
     color: { color_name: "", value: "" },
@@ -53,7 +60,7 @@ const ProductDetails = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { isShaking, handleShake, shakeAnimation } = useShakeAnimation();
-  const { toggleFavorite, favorite } = useFavorite(data?.product!);
+  const { toggleFavorite, favorite } = useFavorite(product!);
 
   const user = authService.getCurrentUser();
 
@@ -76,15 +83,22 @@ const ProductDetails = () => {
     });
 
     window.scroll({ top: 0, behavior: "auto" });
-  }, [data?.product?.product_id]);
+  }, [product?.product_id!]);
+
+  useEffect(() => {
+    if (data) {
+      refetch();
+      console.log(data);
+    }
+  }, [data]);
 
   if (isLoading) return <Loading />;
 
   return (
     <Box display={"flex"} flexDir={"column"} px={"4rem"}>
       <ProductBreadcrumb
-        productName={data?.product?.name!}
-        productType={data?.product?.product_type!}
+        productName={product.name!}
+        productType={product.product_type!}
       />
 
       <Stack
@@ -96,7 +110,7 @@ const ProductDetails = () => {
         gap={"5rem"}
       >
         <Image
-          src={data?.product?.api_featured_image}
+          src={product.api_featured_image}
           flex={1}
           boxSize={"350px"}
           objectFit={"scale-down"}
@@ -108,19 +122,17 @@ const ProductDetails = () => {
         <Flex flex={1} flexDir={"column"} display={"flex"} gap={2} mr={"5rem"}>
           <Link to={"/"}>
             <Heading fontSize={"0.833rem"}>
-              {brands.find((b) => b.value === data?.product?.brand)?.label}
+              {brands.find((b) => b.value === product.brand)?.label}
             </Heading>
           </Link>
-          <Heading fontSize={"1.44rem"}>{data?.product?.name}</Heading>
+          <Heading fontSize={"1.44rem"}>{product.name}</Heading>
           <HStack>
-            <StockBadge amount={data?.product?.stock!} />
-            <Text>({data?.product?.stock} items)</Text>
+            <StockBadge amount={product.stock!} />
+            <Text>({product.stock} items)</Text>
           </HStack>
           <Heading>
-            {data?.product?.price_sign === null
-              ? "$"
-              : data?.product?.price_sign}
-            {data?.product?.price}
+            {product.price_sign === null ? "$" : product.price_sign}
+            {product.price}
           </Heading>
 
           {/* Color Section */}
@@ -287,21 +299,19 @@ const ProductDetails = () => {
           <Divider />
 
           <Flex gap={2} py={2}>
-            {data?.product?.categorie !== null &&
-              data?.product?.categorie !== "" && (
-                <HStack>
-                  <Text>Category: </Text>
-                  <Text fontWeight={"600"}>
-                    <Link to={"/"}>
-                      {
-                        categories?.find(
-                          (c) => c.value === data?.product?.categorie!
-                        )?.label
-                      }
-                    </Link>
-                  </Text>
-                </HStack>
-              )}
+            {product.categorie !== null && product.categorie !== "" && (
+              <HStack>
+                <Text>Category: </Text>
+                <Text fontWeight={"600"}>
+                  <Link to={"/"}>
+                    {
+                      categories?.find((c) => c.value === product.categorie!)
+                        ?.label
+                    }
+                  </Link>
+                </Text>
+              </HStack>
+            )}
             <Center height="30px" px={2}>
               <Divider orientation="vertical" />
             </Center>
@@ -310,9 +320,8 @@ const ProductDetails = () => {
               <Text fontWeight={"600"}>
                 <Link to={"/"}>
                   {
-                    productTypes.find(
-                      (t) => t.value === data?.product?.product_type!
-                    )?.label
+                    productTypes.find((t) => t.value === product.product_type!)
+                      ?.label
                   }
                 </Link>
               </Text>
@@ -341,7 +350,7 @@ const ProductDetails = () => {
 
         <TabPanels>
           <TabPanel>
-            <Text lineHeight={"1.7rem"}>{data?.product?.description!}</Text>
+            <Text lineHeight={"1.7rem"}>{product.description!}</Text>
           </TabPanel>
           <TabPanel>
             <p>two!</p>

@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import {
   cartItemToPayFor,
-  clearRemovedCartItemsList,
   Products,
   updateProductCartSummary,
 } from "../redux/slice/ProductCart";
@@ -12,7 +11,6 @@ import {
   useSendForPaymentsMutation,
 } from "../redux/middleware/ProductApi";
 import { loadStripe } from "@stripe/stripe-js";
-import useGetUser from "./useGetUser";
 import useSyncCartItemsToDB from "./useSyncCartItemsToDB";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/authService";

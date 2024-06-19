@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { Alert, AlertIcon, Box, Button } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button } from "@chakra-ui/react";
 
 const CheckoutForm = () => {
   const [isProcessing, setIsProcessing] = useState(false);

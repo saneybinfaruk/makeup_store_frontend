@@ -1,6 +1,5 @@
-import { Box, Divider, SimpleGrid } from "@chakra-ui/react";
+import { Divider, SimpleGrid } from "@chakra-ui/react";
 
-import { CiDeliveryTruck } from "react-icons/ci";
 import Info from "./Info";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { AiOutlineDollarCircle } from "react-icons/ai";

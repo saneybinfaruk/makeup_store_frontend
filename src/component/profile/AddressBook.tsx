@@ -31,7 +31,6 @@ import {
   useSetAddressTypeMutation,
   useUpdateAddressMutation,
 } from "../../redux/middleware/ProductApi";
-import useGetUser from "../../hooks/useGetUser"; 
 import AddressList from "./AddressList";
 import authService from "../../services/authService";
 
@@ -47,7 +46,7 @@ type AddressForm = z.infer<typeof addressSchema>;
 
 const AddressBook = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [_, setErrorMessage] = useState("");
   const [saveAddress, { isLoading }] = useSaveAddressMutation();
   const [updateAddress] = useUpdateAddressMutation();
   const [setAddressType] = useSetAddressTypeMutation();
@@ -99,8 +98,9 @@ const AddressBook = () => {
 
   const handAddressTypeSelect = async (address_id: number, type: string) => {
     const body = { userId: user?.userId!, address_id: address_id, type: type };
-    const a = await setAddressType(body).unwrap();
-
+    try {
+      await setAddressType(body).unwrap();
+    } catch (error) {}
     refetch();
   };
 

@@ -1,5 +1,5 @@
 import { keyframes } from "@chakra-ui/react";
-import React, { useState } from "react";
+import  { useState } from "react";
 
 const useShakeAnimation = () => {
   const [isShaking, setIsShaking] = useState(false);

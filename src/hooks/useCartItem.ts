@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Products, removeItem } from "../redux/slice/ProductCart";
+import { Products } from "../redux/slice/ProductCart";
 import { AppDispatch, RootState } from "../redux/store";
 import {
   removeItemFromCartDB,
@@ -61,7 +61,6 @@ const useCartItem = (products: Products) => {
     );
   };
 
-  const checkout = () => {};
 
   return { itemQuantity, updateQuantity, remove };
 };

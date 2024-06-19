@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGetOrdersByUserIdQuery } from "../../redux/middleware/ProductApi";
-import useGetUser from "../../hooks/useGetUser";
 import ProductOrderLayout from "../ProductOrderLayout";
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import useClearCartItems from "../../hooks/useClearCartItems";

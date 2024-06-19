@@ -12,7 +12,6 @@ import {
   TabPanels,
   Tabs,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -21,7 +20,7 @@ import {
   useAddUserMutation,
   useGetUserMutation,
 } from "../redux/middleware/ProductApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 

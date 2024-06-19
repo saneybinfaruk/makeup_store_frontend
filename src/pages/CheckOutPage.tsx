@@ -1,24 +1,18 @@
 import {
-  Flex,
   Grid,
   GridItem,
-  Image,
   Text,
-  Box,
   HStack,
-  Divider,
   VStack,
   Spacer,
   Button,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import SelectedAddress from "../component/SelectedAddress";
 import ProductCheckoutLayout from "../component/ProductCheckoutLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import useCartSummary from "../hooks/useCartSummary";
-import { EditIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 import useShakeAnimation from "../hooks/useShakeAnimation";
 import useGetSelectedAddress from "../hooks/useGetSelectedAddress";
 

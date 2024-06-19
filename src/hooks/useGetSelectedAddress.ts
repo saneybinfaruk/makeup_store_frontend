@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useGetUser from "./useGetUser";
 import { useGetSelectedAddressByUserIdQuery } from "../redux/middleware/ProductApi";
 
@@ -27,9 +27,13 @@ const useGetSelectedAddress = () => {
     if (selectedAddress) {
       refetch();
 
-      console.log("==============shipping, billing, both======================");
+      console.log(
+        "==============shipping, billing, both======================"
+      );
       console.log(shipping, billing, both);
-      console.log("===============shipping, billing, both=====================");
+      console.log(
+        "===============shipping, billing, both====================="
+      );
     }
   }, [selectedAddress, shipping, billing, both, selectedAddress]);
 

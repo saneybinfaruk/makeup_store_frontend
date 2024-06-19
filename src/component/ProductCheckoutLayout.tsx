@@ -47,7 +47,7 @@ const ProductCheckoutLayout = ({ products }: Props) => {
           {quantity} item(s). Subtotal:
         </Text>
         <Text fontSize={"md"} py={3} fontWeight={"500"}>
-          ${quantity * price}
+          ${(quantity * price).toFixed(2)}
         </Text>
       </HStack>
     </Box>

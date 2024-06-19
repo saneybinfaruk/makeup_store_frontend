@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
-import { removeItem } from "../redux/slice/ProductCart";
 import { removeItemFromCartDB } from "../redux/saveToDBThunk";
 import useGetUser from "./useGetUser";
 

@@ -18,7 +18,7 @@ const SideNavbar = () => {
   
   return (
     <Flex flexDir={"column"}>
-      {profileMenu.map((menu, index) => (
+      {profileMenu.map((menu) => (
         <ChakraLink
           key={menu.label}
           as={ReactLink}

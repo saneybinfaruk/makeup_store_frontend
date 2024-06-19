@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { LoginFormField, RegFormField } from "../../pages/SignUpPage";
 
-import { CartInfoSendToBackend, removeItemFromCartDB } from "../saveToDBThunk";
-import { Products, removeItem } from "../slice/ProductCart";
-import { loadStripe } from "@stripe/stripe-js";
+import { CartInfoSendToBackend } from "../saveToDBThunk";
+import { Products } from "../slice/ProductCart";
 import authService from "../../services/authService";
 
 export type Product = {
@@ -100,7 +99,7 @@ export const productApi = createApi({
   reducerPath: "ProductApi",
   tagTypes: ["Products"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api/",
+    baseUrl: "https://makeup-store-backend.onrender.com/api",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json, text/plain");

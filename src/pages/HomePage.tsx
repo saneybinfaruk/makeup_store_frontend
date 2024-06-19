@@ -1,4 +1,4 @@
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import HeroCarousel from "../component/HeroCarousel";
 import ProductContainer from "../component/ProductContainer";
 import { useGetNewProductsQuery } from "../redux/middleware/ProductApi";

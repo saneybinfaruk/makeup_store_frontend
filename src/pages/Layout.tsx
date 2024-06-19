@@ -1,7 +1,7 @@
 import Navbar from "../component/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "../component/footer/Footer";
-import { Box, Center } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 const Layout = () => {
   return (
