@@ -29,7 +29,7 @@ const CheckOutPage = () => {
   });
 
   const { handleShake, isShaking, shakeAnimation } = useShakeAnimation();
-  const { billing, shipping, both } = useGetSelectedAddress();
+  const { billing, shipping } = useGetSelectedAddress();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });

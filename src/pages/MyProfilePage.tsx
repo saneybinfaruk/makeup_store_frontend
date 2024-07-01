@@ -1,9 +1,4 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
   Drawer,
@@ -15,14 +10,10 @@ import {
   Grid,
   GridItem,
   Show,
-  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import SideNavbar from "../component/profile/SideNavbar";
-import AccordionFilterItem from "../component/AccordionFilterItem";
-import PriceInput from "../component/PriceInput";
-import { productTypes, categories, brands, tags } from "../constant/options";
 
 const MyProfilePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

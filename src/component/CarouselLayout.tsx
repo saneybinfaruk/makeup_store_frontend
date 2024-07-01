@@ -5,7 +5,6 @@ import {
   Heading,
   Img,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
