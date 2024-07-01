@@ -8,7 +8,7 @@ interface Props {
 }
 const CartButton = ({ quantity, increament, decreament }: Props) => {
   return (
-    <Flex align={"center"} justifyContent={"space-between"} gap={"1rem"}>
+    <Flex align={"center"} justifyContent={"space-between"} gap={"1rem"} width={'130px'}>
       <IconButton
         icon={<LuMinus />}
         aria-label={"plus button"}

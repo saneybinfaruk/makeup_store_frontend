@@ -34,7 +34,7 @@ const HeroCarousel = ({ data }: Props) => {
         </Box>
       ))}
 
-      <Flex  pos={"absolute"} bottom={"0rem"} right={"1rem"}>
+      <Flex pos={"absolute"} bottom={"0rem"} right={"1rem"}>
         {carouselData.map((b, i) => (
           <IconButton
             key={b.product_id}

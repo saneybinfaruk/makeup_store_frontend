@@ -15,7 +15,19 @@ const AddressItem = ({ address }: Props) => {
       <ListItem>{country}</ListItem>
 
       <ListItem>
-        <Flex gap={2} pt={3} justify={"flex-end"}>
+        <Flex
+          gap={2}
+          pt={3}
+          justify={"flex-end"}
+          flexDir={{
+            base: "column",
+            sm: "column",
+            md: "row",
+            lg: "row",
+            xl: "row",
+            "2xl": "row",
+          }}
+        >
           {address_type === "both" ? (
             <>
               <Badge colorScheme="green">DEFAULT DELIVERY ADDRESS</Badge>

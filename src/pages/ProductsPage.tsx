@@ -6,15 +6,26 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
   Flex,
   Grid,
   GridItem,
   Heading,
+  Hide,
   HStack,
+  Input,
   Select,
+  Show,
   SimpleGrid,
   Stack,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import ProductCard from "../component/ProductCard";
@@ -43,8 +54,10 @@ import {
 import { useEffect } from "react";
 import AccordionFilterItem from "../component/AccordionFilterItem";
 import PriceInput from "../component/PriceInput";
+import React from "react";
 
 const ProductsPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure(); 
   const productQuery = useSelector((state: RootState) => state.ProductQuery);
   const dispatch = useDispatch();
 
@@ -114,93 +127,214 @@ const ProductsPage = () => {
   return (
     <Grid
       templateColumns="repeat(12,1fr)"
-      gap={{ base: 1, sm: 6, lg: 7, xl: 8, "2xl": 10 }}
+      gap={{ base: 0, sm: 0, md: 0, lg: 7, xl: 8, "2xl": 10 }}
     >
       {/* Filter Options */}
-      <GridItem colSpan={{ sm: 3, lg: 3, xl: 3, "2xl": 2 }}>
-        <Heading fontSize={"x-large"} pb={5}>
-          Filter
-        </Heading>
 
-        {/* Options */}
-        <Accordion defaultIndex={[0, 1]} allowMultiple>
-          {/* Filter - By Product Types */}
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left" fontWeight={"600"}>
-                  Price range
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
+      <Show above="md">
+        <GridItem colSpan={{ sm: 3, md: 3, lg: 3, xl: 3, "2xl": 2 }}>
+          <Heading fontSize={"x-large"} pb={5}>
+            Filter
+          </Heading>
 
-            <AccordionPanel>
-              <Stack
-                gap={"2.5rem"}
-                py={5}
-                direction={["column", "column", "column", "row", "row", "row"]}
-              >
-                <PriceInput
-                  id="minPrice"
-                  placeholder="0"
-                  onChange={handleMinPrice}
+          {/* Options */}
+          <Accordion defaultIndex={[0, 1]} allowMultiple>
+            {/* Filter - By Product Types */}
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex="1" textAlign="left" fontWeight={"600"}>
+                    Price range
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+
+              <AccordionPanel>
+                <Stack
+                  gap={"2.5rem"}
+                  py={5}
+                  direction={[
+                    "column",
+                    "column",
+                    "column",
+                    "row",
+                    "row",
+                    "row",
+                  ]}
+                >
+                  <PriceInput
+                    id="minPrice"
+                    placeholder="0"
+                    onChange={handleMinPrice}
+                  />
+
+                  <PriceInput
+                    id="maxPrice"
+                    placeholder="10,000"
+                    onChange={handleMaxPrice}
+                  />
+                </Stack>
+              </AccordionPanel>
+            </AccordionItem>
+
+            {/* Filter - By Product Types */}
+
+            <AccordionFilterItem
+              data={productTypes}
+              onChecked={handleProductType}
+              title="Types"
+              toCheck={productQuery.product_type}
+            />
+
+            {/* Filter - By Categories */}
+
+            <AccordionFilterItem
+              data={categories}
+              onChecked={handleProductCategories}
+              title="Categories"
+              toCheck={productQuery.categories}
+            />
+
+            {/* Filter - By Brands */}
+            <AccordionFilterItem
+              data={brands}
+              onChecked={handleProductBrands}
+              title="Brands"
+              toCheck={productQuery.brands}
+            />
+
+            {/* Filter - By Tags */}
+            <AccordionFilterItem
+              data={tags}
+              onChecked={handleProductTags}
+              title="Tags"
+              toCheck={productQuery.tags}
+            />
+          </Accordion>
+        </GridItem>
+      </Show>
+
+      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Filter</DrawerHeader>
+
+          <DrawerBody>
+            <Box>
+              {/* Options */}
+              <Accordion defaultIndex={[0, 1]} allowMultiple>
+                {/* Filter - By Product Types */}
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box
+                        as="span"
+                        flex="1"
+                        textAlign="left"
+                        fontWeight={"600"}
+                      >
+                        Price range
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+
+                  <AccordionPanel>
+                    <Stack
+                      gap={"2.5rem"}
+                      py={5}
+                      direction={[
+                        "column",
+                        "column",
+                        "column",
+                        "row",
+                        "row",
+                        "row",
+                      ]}
+                    >
+                      <PriceInput
+                        id="minPrice"
+                        placeholder="0"
+                        onChange={handleMinPrice}
+                      />
+
+                      <PriceInput
+                        id="maxPrice"
+                        placeholder="10,000"
+                        onChange={handleMaxPrice}
+                      />
+                    </Stack>
+                  </AccordionPanel>
+                </AccordionItem>
+
+                {/* Filter - By Product Types */}
+
+                <AccordionFilterItem
+                  data={productTypes}
+                  onChecked={handleProductType}
+                  title="Types"
+                  toCheck={productQuery.product_type}
                 />
 
-                <PriceInput
-                  id="maxPrice"
-                  placeholder="10,000"
-                  onChange={handleMaxPrice}
+                {/* Filter - By Categories */}
+
+                <AccordionFilterItem
+                  data={categories}
+                  onChecked={handleProductCategories}
+                  title="Categories"
+                  toCheck={productQuery.categories}
                 />
-              </Stack>
-            </AccordionPanel>
-          </AccordionItem>
 
-          {/* Filter - By Product Types */}
+                {/* Filter - By Brands */}
+                <AccordionFilterItem
+                  data={brands}
+                  onChecked={handleProductBrands}
+                  title="Brands"
+                  toCheck={productQuery.brands}
+                />
 
-          <AccordionFilterItem
-            data={productTypes}
-            onChecked={handleProductType}
-            title="Types"
-            toCheck={productQuery.product_type}
-          />
-
-          {/* Filter - By Categories */}
-
-          <AccordionFilterItem
-            data={categories}
-            onChecked={handleProductCategories}
-            title="Categories"
-            toCheck={productQuery.categories}
-          />
-
-          {/* Filter - By Brands */}
-          <AccordionFilterItem
-            data={brands}
-            onChecked={handleProductBrands}
-            title="Brands"
-            toCheck={productQuery.brands}
-          />
-
-          {/* Filter - By Tags */}
-          <AccordionFilterItem
-            data={tags}
-            onChecked={handleProductTags}
-            title="Tags"
-            toCheck={productQuery.tags}
-          />
-        </Accordion>
-      </GridItem>
+                {/* Filter - By Tags */}
+                <AccordionFilterItem
+                  data={tags}
+                  onChecked={handleProductTags}
+                  title="Tags"
+                  toCheck={productQuery.tags}
+                />
+              </Accordion>
+            </Box>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
 
       {/* Filtered Products / Showing All Products if no filter applied */}
-      <GridItem colStart={{ sm: 4, lg: 4, xl: 4, "2xl": 3 }} colEnd={13}>
+      <GridItem
+        colStart={{ base: 13, sm: 13, md: 4, lg: 4, xl: 4, "2xl": 3 }}
+        colEnd={13}
+      >
         {/* Filter Menu */}
         <Box
           width={"100%"}
           pb={"2rem"}
           display={"flex"}
+          flexDir={{
+            base: "column",
+            sm: "column",
+            md: "row",
+            lg: "row",
+            xl: "row",
+            "2xl": "row",
+          }}
           justifyContent={"flex-end"}
-          gap={"2rem"}
+          gap={{
+            base: "2rem",
+            sm: "2rem",
+            md: "2rem",
+            lg: "2rem",
+            xl: "2rem",
+            "2xl": "2rem",
+          }}
         >
           <HStack spacing={1}>
             <Text
@@ -254,6 +388,12 @@ const ProductsPage = () => {
               ))}
             </Select>
           </HStack>
+
+          <Show below="md">
+            <Button variant={"outline"} borderRadius={"lg"} onClick={onOpen}>
+              Filter
+            </Button>
+          </Show>
         </Box>
 
         {/* No Product Found Message */}

@@ -99,7 +99,7 @@ export const productApi = createApi({
   reducerPath: "ProductApi",
   tagTypes: ["Products"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://makeup-store-backend.onrender.com/api",
+    baseUrl: "http://localhost:5000/api",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json, text/plain");

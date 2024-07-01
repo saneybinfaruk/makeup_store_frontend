@@ -8,6 +8,7 @@ import {
   Heading,
   HStack,
   Input,
+  Show,
   Spinner,
   Text,
   VStack,
@@ -78,7 +79,9 @@ const ProductCartPage = () => {
                 templateColumns={"repeat(1, 1fr)"}
                 templateRows={"repeat(2, auto)"}
               >
-                <ProductCartHeader />
+                <Show above="md">
+                  <ProductCartHeader />
+                </Show>
 
                 {cartList
                   .map((products, index) => (
@@ -90,8 +93,6 @@ const ProductCartPage = () => {
                   ))
                   .reverse()}
               </Grid>
-
- 
 
               <Link to={"/"}>
                 <HStack bgColor={"red.50"} align={"center"} py={5}>

@@ -114,12 +114,15 @@ const SignUpPage = () => {
 
   return (
     <Tabs
+      mt={5}
       mx={"auto"}
       display={"flex"}
       flexDir={"column"}
       align="center"
       isFitted
       variant="enclosed"
+      minH={"500px"}
+      mb={10}
     >
       <TabList
         mb={3}
@@ -131,7 +134,7 @@ const SignUpPage = () => {
       </TabList>
 
       <TabPanels
-        maxWidth={["100%", "40%", "50%", "40%", "40%", "35%"]}
+        maxWidth={["100%", "50%", "50%", "40%", "40%", "35%"]}
         mx={"auto"}
       >
         <TabPanel>
@@ -214,7 +217,7 @@ const SignUpPage = () => {
               {errorMessage !== "" && <Text color={"red"}>{errorMessage}</Text>}
 
               <Button
-                width={"sm"}
+                width={"full"}
                 type="submit"
                 isLoading={isSubmitting || isLoading}
                 alignSelf={"start"}

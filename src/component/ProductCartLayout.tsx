@@ -32,7 +32,16 @@ const ProductCartLayout = ({ products, handleCheckBox }: Props) => {
       textAlign={"center"}
       py={5}
     >
-      <Grid templateColumns={"repeat(11, 1fr)"}>
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(1, 1fr)",
+          md: "repeat(1, 1fr)",
+          lg: "repeat(11, 1fr)",
+          xl: "repeat(11, 1fr)",
+          '2xl': "repeat(11, 1fr)",
+        }}
+      >
         <GridItem colSpan={1} alignSelf={"center"}>
           <Checkbox
             colorScheme="red"

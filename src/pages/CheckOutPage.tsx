@@ -23,7 +23,7 @@ const CheckOutPage = () => {
 
   const { totalPrice, discountPrice, discountPercentage, couponCode } =
     productCartSummmary;
-  const { sendPaymentRequest, checkoutLoading,isSuccess } = useCartSummary({
+  const { sendPaymentRequest, checkoutLoading, isSuccess } = useCartSummary({
     code: couponCode,
     discount: discountPercentage,
   });
@@ -35,7 +35,17 @@ const CheckOutPage = () => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
   return (
-    <Grid templateColumns={"repeat(12, 1fr)"} gap={1}>
+    <Grid
+      templateColumns={{
+        base: "repeat(1, 1fr)",
+        sm: "repeat(1, 1fr)",
+        md: "repeat(12, 1fr)",
+        lg: "repeat(12, 1fr)",
+        xl: "repeat(12, 1fr)",
+        "2xl": "repeat(12, 1fr)",
+      }}
+      gap={1}
+    >
       <GridItem colSpan={8} px={5} pb={5}>
         <SelectedAddress
           isShaking={isShaking}
@@ -46,6 +56,7 @@ const CheckOutPage = () => {
           <ProductCheckoutLayout key={index} products={products} />
         ))}
       </GridItem>
+
       <GridItem colSpan={4} mr={4}>
         <VStack
           align={"flex-start"}
@@ -83,13 +94,6 @@ const CheckOutPage = () => {
             onClick={() => {
               if ((!shipping && billing) || (shipping && !billing)) {
                 handleShake();
-
-                console.log("==============handleShake======================");
-                console.log(shipping, billing, both);
-                console.log("===============handleShake=====================");
-
-                console.log("Shake");
-
                 return;
               }
               sendPaymentRequest();

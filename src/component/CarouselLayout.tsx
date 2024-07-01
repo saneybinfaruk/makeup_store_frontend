@@ -19,39 +19,56 @@ const CarouselLayout = ({ name, description, imageUrl, productId }: Props) => {
   const navigate = useNavigate();
   return (
     <Flex
-      direction={["column"]}
       p={{ base: "1rem", sm: "1rem", md: "2rem" }}
       gap={"1rem"}
       minH={"500px"}
       minWidth={"full"}
       transform={"auto"}
       transition={"transform 0.3s ease-in"}
+      flexDir={"column"}
     >
-      <VStack align={"start"} flex={1.2} gap={5} pl={2}>
-        <Heading fontSize={"1.44rem"}>{name}</Heading>
+      <Flex
+        minH={'300px'}
+        flexDir={{
+          base: "column",
+          sm: "column",
+          md: "row",
+          xl: "row",
+          "2xl": "row",
+        }}
+      >
+        <Box flex={0.6}>
+          <Heading fontSize={"1.44rem"}>{name}</Heading>
 
-        <Text noOfLines={5}>{description}</Text>
-
-        <Box
-          flex={0.8}
-          overflow={"hidden"}
-          display={"flex"}
-          justifyContent={"flex-end"}
-          padding={5}
-        >
-          <Img objectFit={"cover"} minHeight={"full"} src={imageUrl} />
+          <Text noOfLines={5}>{description}</Text>
         </Box>
 
-        <Button
-          variant={"solid"}
-          colorScheme="teal"
-          onClick={() => {
-            navigate(`/products/${productId}`);
-          }}
+        <Box
+          overflow={"hidden"}
+          display={"flex"}
+          justifyContent={"center"}
+          padding={5}
+          flex={0.4}
         >
-          Read More
-        </Button>
-      </VStack>
+          <Img
+            objectFit={"cover"}
+            minHeight={"full"}
+            src={imageUrl}
+            width={{base: "50%",sm: '40%',md: '30%'}}
+          />
+        </Box>
+      </Flex>
+
+      <Button
+        variant={"solid"}
+        colorScheme="teal"
+        alignSelf={"self-start"}
+        onClick={() => {
+          navigate(`/products/${productId}`);
+        }}
+      >
+        Read More
+      </Button>
     </Flex>
   );
 };

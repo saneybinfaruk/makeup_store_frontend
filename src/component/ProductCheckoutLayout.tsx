@@ -13,7 +13,14 @@ const ProductCheckoutLayout = ({ products }: Props) => {
 
   return (
     <Box boxShadow={"base"} p={5} borderRadius={"10px"} my={3}>
-      <Flex align={"center"} justify={"space-between"} py={2} mb={2}>
+      <Flex
+        align={{ base: "start", sm: "start", md: "center" }}
+        justify={"space-between"}
+        py={2}
+        mb={2}
+        flexDirection={{ base: "column", sm: "column", md: "row" }}
+        gap={2}
+      >
         <Flex flex={0.5} gap={3} align={"center"}>
           <Image boxSize={"60px"} src={api_featured_image} />
           <Flex flexDir={"column"}>
