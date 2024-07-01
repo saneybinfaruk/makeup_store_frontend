@@ -9,13 +9,7 @@ import {
   HStack,
   Input,
   Spinner,
-  Table,
-  TableContainer,
-  Tbody,
   Text,
-  Th,
-  Thead,
-  Tr,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -25,7 +19,6 @@ import { useState } from "react";
 import { useUseCouponMutation } from "../redux/middleware/ProductApi";
 import ProductCartLayout from "../component/ProductCartLayout";
 import ProductCartHeader from "../component/ProductCartHeader";
-import ProductCartLayoutTable from "../component/ProductCartLayoutTable";
 
 const ProductCartPage = () => {
   const [useCoupon, { isLoading }] = useUseCouponMutation();
