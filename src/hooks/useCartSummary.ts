@@ -80,8 +80,12 @@ const useCartSummary = (coupon: { code: string; discount: number }) => {
     try {
       const sessionId = await sendForPayments(cartToSend).unwrap();
 
+      console.log(sessionId);
+      
+
       if (!publishableKey) return;
       const stripe = await loadStripe(publishableKey);
+
       dispatch(cartItemToPayFor(filteredCartList));
       await stripe?.redirectToCheckout({ sessionId });
     } catch (error) {}

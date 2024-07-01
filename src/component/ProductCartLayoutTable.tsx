@@ -7,7 +7,10 @@ import {
   GridItem,
   HStack,
   Image,
+  Tbody,
+  Td,
   Text,
+  Tr,
 } from "@chakra-ui/react";
 import { productTypes } from "../constant/options";
 import { Products } from "../redux/slice/ProductCart";
@@ -20,28 +23,23 @@ interface Props {
     products: Products
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const ProductCartLayout = ({ products, handleCheckBox }: Props) => {
+const ProductCartLayoutTable = ({ products, handleCheckBox }: Props) => {
   const { product, color, quantity } = products;
   const { itemQuantity, updateQuantity, remove } = useCartItem(products);
 
   return (
-    <GridItem
-      rowSpan={1}
-      colSpan={12}
-      bgColor={"gray.50"}
-      textAlign={"center"}
-      py={5}
-    >
-      <Grid templateColumns={"repeat(11, 1fr)"}>
-        <GridItem colSpan={1} alignSelf={"center"}>
+    <Tbody>
+      <Tr>
+
+        <Td colSpan={1} alignSelf={"center"}>
           <Checkbox
             colorScheme="red"
             defaultChecked
             onChange={handleCheckBox(products)}
           />
-        </GridItem>
+        </Td>
 
-        <GridItem
+        <Td
           colSpan={4}
           display={"flex"}
           alignItems={"center"}
@@ -81,9 +79,9 @@ const ProductCartLayout = ({ products, handleCheckBox }: Props) => {
               Remove
             </Button>
           </Flex>
-        </GridItem>
+        </Td>
 
-        <GridItem colSpan={2} px={1}>
+        <Td colSpan={2} px={1}>
           <CartButton
             quantity={itemQuantity}
             increament={() => {
@@ -93,22 +91,25 @@ const ProductCartLayout = ({ products, handleCheckBox }: Props) => {
               updateQuantity(-1);
             }}
           />
-        </GridItem>
-        <GridItem colSpan={2} pt={2}>
+        </Td>
+
+        <Td colSpan={2} pt={2}>
           <Text fontWeight={"bold"} fontSize={"0.9rem"}>
             {product?.price_sign === null ? "$" : product?.price_sign}
             {product?.price}
           </Text>
-        </GridItem>
-        <GridItem colSpan={2} pt={2}>
+        </Td>
+
+        <Td colSpan={2} pt={2}>
           <Text fontWeight={"bold"} fontSize={"0.9rem"}>
             {product?.price_sign === null ? "$" : product?.price_sign}
             {(quantity * product?.price).toFixed(2)}
           </Text>
-        </GridItem>
-      </Grid>
-    </GridItem>
+        </Td>
+
+      </Tr>
+    </Tbody>
   );
 };
 
-export default ProductCartLayout;
+export default ProductCartLayoutTable;

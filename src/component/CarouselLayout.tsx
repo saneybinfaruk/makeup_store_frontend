@@ -19,7 +19,8 @@ const CarouselLayout = ({ name, description, imageUrl, productId }: Props) => {
   const navigate = useNavigate();
   return (
     <Flex
-      p={"2rem"}
+      direction={["column"]}
+      p={{ base: "1rem", sm: "1rem", md: "2rem" }}
       gap={"1rem"}
       minH={"500px"}
       minWidth={"full"}
@@ -31,10 +32,19 @@ const CarouselLayout = ({ name, description, imageUrl, productId }: Props) => {
 
         <Text noOfLines={5}>{description}</Text>
 
+        <Box
+          flex={0.8}
+          overflow={"hidden"}
+          display={"flex"}
+          justifyContent={"flex-end"}
+          padding={5}
+        >
+          <Img objectFit={"cover"} minHeight={"full"} src={imageUrl} />
+        </Box>
+
         <Button
           variant={"solid"}
           colorScheme="teal"
-          marginTop={"2rem"}
           onClick={() => {
             navigate(`/products/${productId}`);
           }}
@@ -42,16 +52,6 @@ const CarouselLayout = ({ name, description, imageUrl, productId }: Props) => {
           Read More
         </Button>
       </VStack>
-
-      <Box
-        flex={0.8}
-        overflow={"hidden"}
-        display={"flex"}
-        justifyContent={"flex-end"}
-        padding={5}
-      >
-        <Img objectFit={"cover"} minHeight={"full"} src={imageUrl} />
-      </Box>
     </Flex>
   );
 };

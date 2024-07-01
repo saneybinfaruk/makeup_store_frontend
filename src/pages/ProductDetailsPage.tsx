@@ -95,7 +95,7 @@ const ProductDetails = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <Box display={"flex"} flexDir={"column"} px={"4rem"}>
+    <Box display={"flex"} flexDir={"column"} px={{base: '1rem',md: '2rem'}}>
       <ProductBreadcrumb
         productName={product.name!}
         productType={product.product_type!}

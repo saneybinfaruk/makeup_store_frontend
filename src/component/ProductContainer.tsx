@@ -8,7 +8,7 @@ interface Props {
 }
 const ProductContainer = ({ heading, products }: Props) => {
   return (
-    <Box gap={5} display={"flex"} flexDir={"column"} my={10}>
+    <Box gap={5} display={"flex"} flexDir={"column"} my={10} px={'1rem'}>
       <Text fontWeight={"bold"} fontSize={"1.1rem"}>
         {heading}
       </Text>

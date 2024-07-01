@@ -9,7 +9,13 @@ import {
   HStack,
   Input,
   Spinner,
+  Table,
+  TableContainer,
+  Tbody,
   Text,
+  Th,
+  Thead,
+  Tr,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -19,6 +25,7 @@ import { useState } from "react";
 import { useUseCouponMutation } from "../redux/middleware/ProductApi";
 import ProductCartLayout from "../component/ProductCartLayout";
 import ProductCartHeader from "../component/ProductCartHeader";
+import ProductCartLayoutTable from "../component/ProductCartLayoutTable";
 
 const ProductCartPage = () => {
   const [useCoupon, { isLoading }] = useUseCouponMutation();
@@ -34,7 +41,7 @@ const ProductCartPage = () => {
     cartList,
     cartLength,
     totalPrice,
-    discountedPrice, 
+    discountedPrice,
     checkoutLoading,
     filteredCartLength,
     cartItemsDBLoading,
@@ -44,8 +51,6 @@ const ProductCartPage = () => {
     discount: productCoupon.discount,
   });
 
-  
-
   return cartLength > 0 ? (
     <>
       {cartItemsDBLoading ? (
@@ -53,8 +58,16 @@ const ProductCartPage = () => {
           <Spinner display={"flex"} size={"xl"} />
         </Flex>
       ) : (
-        <Grid templateColumns={"repeat(6, 1fr)"} px={15}>
-          <GridItem colSpan={4} minH={"500px"} pr={12}>
+        <Grid
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            sm: "repeat(1, 1fr)",
+            md: "repeat(6, 1fr)",
+          }}
+          px={4}
+          gap={3}
+        >
+          <GridItem colSpan={{ base: 6, sm: 6, md: 4 }} minH={"500px"}>
             <Flex width={"full"} flexDir={"column"}>
               <HStack
                 justify={"space-between"}
@@ -85,6 +98,8 @@ const ProductCartPage = () => {
                   .reverse()}
               </Grid>
 
+ 
+
               <Link to={"/"}>
                 <HStack bgColor={"red.50"} align={"center"} py={5}>
                   <GoArrowLeft color="blue" />{" "}
@@ -94,7 +109,7 @@ const ProductCartPage = () => {
             </Flex>
           </GridItem>
 
-          <GridItem colSpan={2} bgColor={"gray.50"}>
+          <GridItem colSpan={{ base: 6, sm: 6, md: 2 }} bgColor={"gray.50"}>
             <Box px={10} pb={10}>
               <Heading fontSize={"x-large"} py={8}>
                 Order Summary
@@ -256,7 +271,7 @@ const ProductCartPage = () => {
                 borderRadius={1}
                 onClick={goForPayment}
                 isLoading={checkoutLoading}
-                isDisabled={filteredCartLength===0}
+                isDisabled={filteredCartLength === 0}
               >
                 CHECKOUT
               </Button>

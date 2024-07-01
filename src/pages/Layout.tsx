@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <Box>
       <Navbar />
-      <Box maxW="1920px" mx="auto" px={4}>
+      <Box maxW="1920px" mx="auto" px={3}>
         <Outlet />
       </Box>
       <Footer />

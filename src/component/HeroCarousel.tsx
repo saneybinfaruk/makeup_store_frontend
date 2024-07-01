@@ -18,7 +18,6 @@ const HeroCarousel = ({ data }: Props) => {
       transform={"auto"}
       minWidth={"full"}
       overflow={"hidden"}
-      borderRadius={"3xl"}
     >
       {carouselData.map((b) => (
         <Box
@@ -34,7 +33,8 @@ const HeroCarousel = ({ data }: Props) => {
           />
         </Box>
       ))}
-      <Flex pos={"absolute"} bottom={"4rem"} left={"2rem"}>
+
+      <Flex  pos={"absolute"} bottom={"0rem"} right={"1rem"}>
         {carouselData.map((b, i) => (
           <IconButton
             key={b.product_id}
