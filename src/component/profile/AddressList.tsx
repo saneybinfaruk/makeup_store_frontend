@@ -16,8 +16,28 @@ interface Props {
   onChange: (address_id: number, value: string) => void;
   onRemove: (address_id: number) => void;
   onEdit: (address_id: number) => void;
+  selectedAddressType: {
+    shipping: {
+      type: string | null;
+      addressId: number | null;
+    };
+    billing: {
+      type: string | null;
+      addressId: number | null;
+    };
+    both: {
+      type: string | null;
+      addressId: number | null;
+    };
+  };
 }
-const AddressList = ({ address, onChange, onRemove, onEdit }: Props) => {
+const AddressList = ({
+  address,
+  onChange,
+  onRemove,
+  onEdit,
+  selectedAddressType,
+}: Props) => {
   const { address_id, address_type } = address;
 
   return (
@@ -27,7 +47,10 @@ const AddressList = ({ address, onChange, onRemove, onEdit }: Props) => {
       borderColor={"gray.200"}
       borderRadius={"10px"}
     >
-      <AddressItem address={address} />
+      <AddressItem
+        address={address}
+        selectedAddressType={selectedAddressType}
+      />
 
       <Divider />
       <HStack p={4}>
@@ -40,8 +63,15 @@ const AddressList = ({ address, onChange, onRemove, onEdit }: Props) => {
           onChange={(value) => {
             onChange(address_id!, value);
           }}
-          defaultValue={address_type}
-          value={address_type}
+          value={
+            selectedAddressType.shipping.addressId === address_id
+              ? "shipping"
+              : selectedAddressType.billing.addressId === address_id
+              ? "billing"
+              : selectedAddressType.both.addressId === address_id
+              ? "both"
+              : ""
+          }
         >
           <HStack>
             <Radio value="shipping">Shipping</Radio>

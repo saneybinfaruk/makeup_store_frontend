@@ -12,6 +12,8 @@ const useGetSelectedAddress = () => {
     skip: !user?.userId,
   });
 
+  console.log('selectedAddress == ', selectedAddress)
+
   const shipping = selectedAddress?.find(
     (address) => address.address_type === "shipping"
   );
@@ -24,7 +26,7 @@ const useGetSelectedAddress = () => {
   );
 
   useEffect(() => {
-    if (selectedAddress) {
+    if (selectedAddress && user) {
       refetch();
 
       console.log(

@@ -16,14 +16,19 @@ import {
 import { Link } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
 import useCartSummary from "../hooks/useCartSummary";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUseCouponMutation } from "../redux/middleware/ProductApi";
 import ProductCartLayout from "../component/ProductCartLayout";
 import ProductCartHeader from "../component/ProductCartHeader";
+import authService from "../services/authService";
+import { useDispatch } from "react-redux";
+import { syncCartList } from "../redux/slice/ProductCart";
+import { AppDispatch } from "../redux/store";
 
 const ProductCartPage = () => {
   const [useCoupon, { isLoading }] = useUseCouponMutation();
-
+  const user = authService.getCurrentUser();
+  const dispatch = useDispatch<AppDispatch>();
   const [productCoupon, setProductCoupon] = useState({
     coupon: "",
     discount: 0,
@@ -44,6 +49,12 @@ const ProductCartPage = () => {
     code: productCoupon.coupon,
     discount: productCoupon.discount,
   });
+
+  useEffect(() => {
+    if (user?.userId) {
+      dispatch(syncCartList(user?.userId));
+    }
+  }, [user?.userId, dispatch]);
 
   return cartLength > 0 ? (
     <>
@@ -125,27 +136,6 @@ const ProductCartPage = () => {
                 <Text fontWeight={"bold"}>PROMO CODE</Text>
 
                 {/* Coupon Input */}
-                {/* <FormControl isInvalid={isError}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="text"
-                value={productCoupon.coupon}
-                onChange={(event) => {
-                  setProductCoupon({
-                    ...productCoupon,
-                    coupon: event.currentTarget.value,
-                    errorMessage: "",
-                  });
-                }}
-              />
-              {!isError ? (
-                <FormHelperText>
-                  Enter the email you'd like to receive the newsletter on.
-                </FormHelperText>
-              ) : (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )}
-            </FormControl> */}
                 <Input
                   bgColor={"white"}
                   variant={"filled"}
@@ -183,18 +173,13 @@ const ProductCartPage = () => {
                     }
 
                     try {
-                      const coupon = await useCoupon({
+                      const discountParcent = await useCoupon({
                         code: productCoupon.coupon,
                       }).unwrap();
 
-                      const a = JSON.parse(coupon.toString());
-                      console.log("====================================");
-                      console.log(a.percent_off);
-                      console.log("====================================");
-
                       setProductCoupon({
                         ...productCoupon,
-                        discount: a.percent_off,
+                        discount: discountParcent,
                       });
                     } catch (error) {
                       if (

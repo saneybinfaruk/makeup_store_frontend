@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../middleware/ProductApi";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Product, productApi } from "../middleware/ProductApi";
 
 export interface Products {
   product: Product;
@@ -32,6 +32,56 @@ const initialState: ProductsCartState = {
   },
 };
 
+export const syncCartList = createAsyncThunk(
+  "ProductCart/syncCartList",
+  async (userId: number, { dispatch, getState }) => {
+    const state = getState() as { productCart: ProductsCartState };
+    const localCartList = state.productCart.cartList;
+
+    const { data: dbCartList } =
+      (await dispatch(
+        productApi.endpoints.getCartItemsByUserId.initiate(userId, {
+          forceRefetch: true,
+        })
+      )) || [];
+
+    const itemsToAddToLocal = dbCartList?.filter(
+      (dbItem) =>
+        !localCartList.some(
+          (localItem) =>
+            localItem.product.product_id === dbItem.product.product_id &&
+            localItem.color.color_name === dbItem.color.color_name &&
+            localItem.color.value === dbItem.color.value
+        )
+    );
+
+    itemsToAddToLocal?.forEach((item) => dispatch(addToCart(item)));
+
+    const itemsToAddToDB = localCartList.filter(
+      (localItem) =>
+        !dbCartList?.some(
+          (dbItem) =>
+            dbItem.product.product_id === localItem.product.product_id &&
+            dbItem.color.color_name === localItem.color.color_name &&
+            dbItem.color.value === localItem.color.value
+        )
+    );
+
+    const addOrUpdateCartItem = productApi.endpoints.addCartItemToDB.initiate;
+
+    for (const item of itemsToAddToDB) {
+      await dispatch(
+        addOrUpdateCartItem({
+          userId: userId,
+          productId: item.product.product_id,
+          colorName: item.color.color_name,
+          colorValue: item.color.value,
+          quantity: item.quantity,
+        })
+      );
+    }
+  }
+);
 const ProductCart = createSlice({
   name: "ProductsCart",
   initialState,
@@ -47,6 +97,10 @@ const ProductCart = createSlice({
       );
 
       if (item) {
+        if (quantity <= 0) {
+          state.cartList = state.cartList.filter((p) => p !== item);
+        }
+
         item.quantity = quantity;
       } else {
         state.cartList.push(action.payload);

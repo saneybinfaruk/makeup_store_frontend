@@ -26,6 +26,7 @@ import { z } from "zod";
 import {
   useGetAddressByIdQuery,
   useGetAllAddressesByUserIdQuery,
+  useGetSelectedAddressByUserIdQuery,
   useRemoveAddressByIdMutation,
   useSaveAddressMutation,
   useSetAddressTypeMutation,
@@ -83,9 +84,9 @@ const AddressBook = () => {
   });
 
   const onAddressSubmit: SubmitHandler<AddressForm> = async (data) => {
-    const d = { ...data, userId: user?.userId! };
+    const addressToSave = { ...data, userId: user?.userId! };
     try {
-      const response = await saveAddress(d).unwrap();
+      const response = await saveAddress(addressToSave).unwrap();
 
       if (response === "Address inserted") {
         refetch();
@@ -96,12 +97,78 @@ const AddressBook = () => {
     }
   };
 
-  const handAddressTypeSelect = async (address_id: number, type: string) => {
+  const [selectedAddressType, selectAddressType] = useState<{
+    shipping: { type: string | null; addressId: number | null };
+    billing: { type: string | null; addressId: number | null };
+    both: { type: string | null; addressId: number | null };
+  }>({
+    shipping: { type: null, addressId: null },
+    billing: { type: null, addressId: null },
+    both: { type: null, addressId: null },
+  });
+
+  const { data: userSelectedAddress } = useGetSelectedAddressByUserIdQuery(
+    user?.userId!
+  );
+
+  const updateDefaultAddress = async (type: string, address_id: number) => {
     const body = { userId: user?.userId!, address_id: address_id, type: type };
     try {
       await setAddressType(body).unwrap();
     } catch (error) {}
     refetch();
+  };
+
+  const handleAddressTypeChange = (address_id: number, type: string) => {
+    if (type === "shipping") {
+      if (selectedAddressType.billing.addressId === address_id) {
+        selectAddressType({
+          ...selectedAddressType,
+          both: { type: "both", addressId: address_id },
+          shipping: { type: null, addressId: null },
+          billing: { type: null, addressId: null },
+        });
+
+        updateDefaultAddress("both", address_id);
+      } else {
+        selectAddressType({
+          ...selectedAddressType,
+          shipping: { type, addressId: address_id },
+          both: { type: null, addressId: null },
+        });
+
+        updateDefaultAddress(type, address_id);
+      }
+    } else if (type === "billing") {
+      if (selectedAddressType.shipping.addressId === address_id) {
+        selectAddressType({
+          ...selectedAddressType,
+          both: { type: "both", addressId: address_id },
+          shipping: { type: null, addressId: null },
+          billing: { type: null, addressId: null },
+        });
+
+        updateDefaultAddress("both", address_id);
+      } else {
+        selectAddressType({
+          ...selectedAddressType,
+          billing: { type, addressId: address_id },
+          both: { type: null, addressId: null },
+        });
+
+        updateDefaultAddress(type, address_id);
+      }
+    } else if (type === "both") {
+      selectAddressType({
+        both: { type, addressId: address_id },
+        shipping: { type: null, addressId: null },
+        billing: { type: null, addressId: null },
+      });
+
+      updateDefaultAddress(type, address_id);
+    }
+
+    console.log(selectedAddressType);
   };
 
   const handleOnRemove = async (address_id: number) => {
@@ -122,6 +189,7 @@ const AddressBook = () => {
 
     onOpen();
   };
+
   const onUpdateAddressSubmit: SubmitHandler<AddressForm> = async (data) => {
     const d = { ...data, userId: user?.userId!, address_id: addressId! };
     try {
@@ -135,6 +203,7 @@ const AddressBook = () => {
       setErrorMessage(error.data);
     }
   };
+
   const {
     data: addressess,
     isLoading: allAddressLoading,
@@ -152,6 +221,43 @@ const AddressBook = () => {
       setValue("country", addressById?.[0]?.country || "");
     }
   }, [addressById, addressId, setValue]);
+
+  useEffect(() => {
+    if (selectedAddressType) {
+      const updatedAddress: {
+        shipping: { type: null | string; addressId: null | number };
+        billing: { type: null | string; addressId: null | number };
+        both: { type: null | string; addressId: null | number };
+      } = {
+        shipping: { type: null, addressId: null },
+        billing: { type: null, addressId: null },
+        both: { type: null, addressId: null },
+      };
+
+      userSelectedAddress?.forEach((address) => {
+        if (address?.address_type === "shipping") {
+          updatedAddress.shipping = {
+            type: "shipping",
+            addressId: address.address_id!,
+          };
+        }
+        if (address?.address_type === "billing") {
+          updatedAddress.billing = {
+            type: "billing",
+            addressId: address.address_id!,
+          };
+        }
+        if (address?.address_type === "both") {
+          updatedAddress.both = {
+            type: "both",
+            addressId: address.address_id!,
+          };
+        }
+      });
+
+      selectAddressType(updatedAddress);
+    }
+  }, [userSelectedAddress]);
 
   if (allAddressLoading)
     return (
@@ -257,9 +363,10 @@ const AddressBook = () => {
           <AddressList
             key={address.address_id}
             address={address}
-            onChange={handAddressTypeSelect}
+            onChange={handleAddressTypeChange}
             onRemove={handleOnRemove}
             onEdit={handleOnEdit}
+            selectedAddressType={selectedAddressType}
           />
         ))}
       </Flex>

@@ -99,7 +99,8 @@ export const productApi = createApi({
   reducerPath: "ProductApi",
   tagTypes: ["Products"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://makeup-store-backend.onrender.com/api",
+    // baseUrl: "https://makeup-store-backend.onrender.com/api",
+    baseUrl: "http://localhost:5000/api",
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
       headers.set("Accept", "application/json, text/plain");
@@ -164,7 +165,7 @@ export const productApi = createApi({
 
     useCoupon: builder.mutation<number, Coupon>({
       query: (coupon: Coupon) => ({
-        url: "/validate-coupon",
+        url: "/coupon",
         method: "POST",
         body: coupon,
         responseHandler: (response) => response.text(),

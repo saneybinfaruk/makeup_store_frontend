@@ -3,9 +3,26 @@ import { Address } from "../../redux/middleware/ProductApi";
 
 interface Props {
   address: Address;
+  selectedAddressType?: {
+    shipping: {
+      type: string | null;
+      addressId: number | null;
+    };
+    billing: {
+      type: string | null;
+      addressId: number | null;
+    };
+    both: {
+      type: string | null;
+      addressId: number | null;
+    };
+  };
 }
-const AddressItem = ({ address }: Props) => {
-  const { address_line, city, state, zip, country, address_type } = address;
+const AddressItem = ({ address, selectedAddressType }: Props) => {
+  const { address_line, city, state, zip, country, address_type, address_id } =
+    address;
+
+  console.log("From AddressItem === ", selectedAddressType);
   return (
     <List p={4}>
       <ListItem>{address_line}</ListItem>
@@ -28,14 +45,17 @@ const AddressItem = ({ address }: Props) => {
             "2xl": "row",
           }}
         >
-          {address_type === "both" ? (
+          {selectedAddressType?.both?.addressId === address_id ||
+          address_type === "both" ? (
             <>
               <Badge colorScheme="green">DEFAULT DELIVERY ADDRESS</Badge>
               <Badge colorScheme="orange">DEFAULT BILLING ADDRESS</Badge>
             </>
-          ) : address_type === "shipping" ? (
+          ) : selectedAddressType?.shipping?.addressId === address_id ||
+            address_type === "shipping" ? (
             <Badge colorScheme="green">DEFAULT DELIVERY ADDRESS</Badge>
-          ) : address_type === "billing" ? (
+          ) : selectedAddressType?.billing?.addressId === address_id ||
+            address_type === "billing" ? (
             <Badge colorScheme="orange">DEFAULT BILLING ADDRESS</Badge>
           ) : (
             ""

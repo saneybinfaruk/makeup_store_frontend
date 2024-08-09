@@ -15,8 +15,11 @@ import { RootState } from "../redux/store";
 import useCartSummary from "../hooks/useCartSummary";
 import useShakeAnimation from "../hooks/useShakeAnimation";
 import useGetSelectedAddress from "../hooks/useGetSelectedAddress";
+import { useGetSelectedAddressByUserIdQuery } from "../redux/middleware/ProductApi";
+import authService from "../services/authService";
 
 const CheckOutPage = () => {
+  const user = authService.getCurrentUser();
   const { filteredCartList, productCartSummmary } = useSelector(
     (state: RootState) => state.ProductCart
   );
@@ -92,12 +95,16 @@ const CheckOutPage = () => {
             my={3}
             isLoading={checkoutLoading || isSuccess}
             onClick={() => {
-              if ((!shipping && billing) || (shipping && !billing)) {
+              if (
+                (!shipping && billing) ||
+                (shipping && !billing) ||
+                (!shipping && !billing)
+              ) {
                 handleShake();
-                return;
+              } else {
+                sendPaymentRequest();
+                console.log("Go to payment");
               }
-              sendPaymentRequest();
-              console.log("Go to payment");
             }}
           >
             {"Place Order".toUpperCase()}
