@@ -38,7 +38,7 @@ const AddressList = ({
   onEdit,
   selectedAddressType,
 }: Props) => {
-  const { address_id, address_type } = address;
+  const { address_id } = address;
 
   return (
     <Flex

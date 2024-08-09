@@ -15,11 +15,8 @@ import { RootState } from "../redux/store";
 import useCartSummary from "../hooks/useCartSummary";
 import useShakeAnimation from "../hooks/useShakeAnimation";
 import useGetSelectedAddress from "../hooks/useGetSelectedAddress";
-import { useGetSelectedAddressByUserIdQuery } from "../redux/middleware/ProductApi";
-import authService from "../services/authService";
 
 const CheckOutPage = () => {
-  const user = authService.getCurrentUser();
   const { filteredCartList, productCartSummmary } = useSelector(
     (state: RootState) => state.ProductCart
   );
